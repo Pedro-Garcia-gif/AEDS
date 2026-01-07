@@ -1,0 +1,126 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+#define inicioarranjo 1
+#define MaxTam 5
+
+typedef int Apontador;
+
+typedef struct
+{
+    int cod;
+    int idade;
+} TipoItem;
+
+typedef struct
+{
+    TipoItem Item[MaxTam + 1];
+    Apontador primeiro;
+    Apontador ultimo;
+} Tipolista;
+
+Tipolista Lista;
+TipoItem x;
+Apontador pos;
+
+void FLVazia(Tipolista *Lista)
+{
+    Lista->primeiro = inicioarranjo;
+    Lista->ultimo = Lista->primeiro;
+}
+
+int Vazia(Tipolista Lista)
+{
+    return (Lista.primeiro == Lista.ultimo);
+}
+void Insere(TipoItem x, Tipolista *Lista)
+{
+    if (Lista->ultimo > MaxTam)
+    {
+        printf("\n A lista esta cheia\n");
+    }
+    else
+    {
+        Lista->Item[Lista->ultimo - 1] = x;
+        Lista->ultimo = Lista->ultimo + 1;
+    }
+}
+void Imprime(Tipolista Lista)
+{
+    int aux;
+    for (aux = Lista.primeiro - 1; aux <= (Lista.ultimo - 2); aux = aux = 1)
+    {
+        printf("Cod: %d\n Idade: %d\n\n\n", Lista.Item[aux].cod, Lista.Item[aux].idade);
+    }
+}
+void Procura(TipoItem x, Tipolista Lista)
+{
+    int i, encontrou = 0;
+    for (i = Lista.primeiro - 1; i <= Lista.ultimo - 2; i = i + 1)
+    {
+        if (Lista.Item[i].cod == x.cod)
+        {
+            encontrou = 1;
+            printf("Codigo encontrado na posicao:%d\n", i);
+            break;
+        }
+    }
+    if (encontrou==0)
+    {
+        printf("Codigo nao encontrado\n");
+    }
+}
+int main()
+{
+    int opcao, resposta;
+    setlocale(LC_ALL, ""); // aceitar acentos
+    FLVazia(&Lista);
+    do
+    {
+        printf("\n\nMENU\n\n");
+        printf("Digite a opcao desejada:\n");
+        printf("0 - Sair\n");
+        printf("1 - Esvaziar lista\n");
+        printf("2 - Verificar se a lista esta vazia\n");
+        printf("3 - Inserir elemento na lista\n");
+        printf("4 - Imprimir os elementos na lista\n");
+        printf("5 - Pesquisar elemento na lista\n");
+        scanf("%d", &opcao);
+        switch (opcao)
+        {
+        case 0:
+            printf("PROGRAMA ENCERRADO!\n");
+            break;
+        case 1:
+            FLVazia(&Lista);
+            printf("\nA LISTA VAZIA\n");
+            break;
+        case 2:
+            resposta = Vazia(Lista);
+            if (resposta == 1)
+                printf("\nA LISTA VAZIA\n");
+            else
+                printf("\nLista não esta vazia\n");
+            break;
+        case 3:
+        {
+            printf("Digite o codigo\n");
+            scanf("%d", &x.cod);
+            printf("Digite a idade\n");
+            scanf("%d", &x.idade);
+            Insere(x, &Lista);
+            break;
+        case 4:
+        {
+            Imprime(Lista);
+            break;
+        }
+        }
+        default:
+            printf("\n\nOpcao invalidade\n\n");
+        }
+        _getch();
+        system("cls");
+    } while (opcao != 0); // fim do while
+    return (0);
+}
